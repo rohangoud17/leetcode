@@ -14,7 +14,7 @@ class Solution:
 
 
         for j in t:
-            if j in counter:
+            if j in counter and counter[j] > 0:
                 counter[j] -= 1
             else:
                 return False
