@@ -9,7 +9,13 @@ class Solution(object):
 
         for i in nums:
             if i in my_dict:
-                return True
+                my_dict[i] += 1
             else:
-                my_dict[i] = 0
+                my_dict[i] = 1
+
+        for j in my_dict:
+            if my_dict[j] > 1:
+                return True
+        
         return False
+ 
