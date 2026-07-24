@@ -6,14 +6,21 @@ class Solution(object):
         :rtype: List[int]
         """
 
+        new_dict = {}
         new_list = []
+
         for i in range(len(nums)):
             complement = target - nums[i]
-            for j in range(i+1, len(nums)):
-                if nums[j] == complement:
-                    new_list = [i,j]
-        return new_list
+            if complement in new_dict:
+                new_list = [new_dict[complement], i]
+            else:
+                new_dict[nums[i]] = i
 
+        return new_list
+        
+        
+
+ 
 
                 
 
