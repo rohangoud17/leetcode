@@ -6,13 +6,14 @@ class Solution(object):
         :rtype: List[int]
         """
 
-        if len(nums) == 2:
-            return [0,1]
+        new_list = []
         for i in range(len(nums)):
             complement = target - nums[i]
-            for j in range(i+1,len(nums)):
+            for j in range(i+1, len(nums)):
                 if nums[j] == complement:
-                    return [i,j]
+                    new_list = [i,j]
+        return new_list
+
 
                 
 
