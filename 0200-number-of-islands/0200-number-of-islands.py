@@ -1,43 +1,33 @@
-class Solution(object):
-    def numIslands(self, grid):
-        """
-        :type grid: List[List[str]]
-        :rtype: int
-        """
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+
         if not grid:
             return 0
-        
-        islands = 0
-        rows, col = len(grid), len(grid[0])
-        visit = set()
 
-        def bfs(r,c):
+        islands = 0
+        visit = set()
+        rows, columns = len(grid), len(grid[0])
+
+        def dfs(r,c):
             q = collections.deque()
             visit.add((r,c))
             q.append((r,c))
 
             while(q):
-                row, colu = q.popleft()
-                directions = [[1,0],[-1,0], [0,1], [0,-1]]
+                new_row, new_col = q.pop()
+                directions = [[1,0], [-1,0], [0,1], [0,-1]]
 
                 for dr, dc in directions:
-                    r , c = row + dr, colu + dc
-                    if (r in range(rows) and c in range(col)and grid[r][c] == '1' and (r,c) not in visit):
-                        q.append((r,c))
+                    r, c = new_row + dr, new_col + dc
+                    if (r in range(rows) and c in range(columns) and grid[r][c] == '1' and (r,c) not in visit):
                         visit.add((r,c))
+                        q.append((r,c))
 
 
         for r in range(rows):
-            for c in range(col):
-                if grid[r][c] == '1' and (r,c) not in visit:
-                    bfs(r,c)
+            for c in range(columns):
+                if (grid[r][c] == '1' and (r,c) not in visit):
+                    dfs(r,c)
                     islands += 1
-
-        # print(visit)
-                    
-
-                
-        
-        return islands 
-
+        return islands
         
