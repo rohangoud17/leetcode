@@ -1,10 +1,5 @@
-class Solution(object):
-    def topKFrequent(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: List[int]
-        """
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
 
         my_dict = {}
 
@@ -13,14 +8,13 @@ class Solution(object):
                 my_dict[i] += 1
             else:
                 my_dict[i] = 1
-
+        
         result = []
 
         for j in range(k):
             highest_key = max(my_dict, key = my_dict.get)
             result.append(highest_key)
             my_dict.pop(highest_key)
-
+        
         return result
-
         
