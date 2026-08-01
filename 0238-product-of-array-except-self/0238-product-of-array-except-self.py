@@ -12,7 +12,6 @@ class Solution(object):
             res[i] = prefix
             prefix *= nums[i]
         
-        print(res)
         
         suffix = 1
 
