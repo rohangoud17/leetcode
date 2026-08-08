@@ -5,24 +5,32 @@ class Solution(object):
         :rtype: bool
         """
 
+        if (len(s) < 2):
+            return False
+        
         if (len(s) % 2 != 0):
             return False
+        
+        my_dict = {')': '(', '}':'{',']':'['}
 
         stack = []
-        mapping = {'}':'{', ')': '(', ']' :'['}
 
         for i in s:
-            if i in mapping:
-                if not stack or stack[-1] != mapping[i]:
+            if i in my_dict:
+                if not stack:
                     return False
-                stack.pop()
-            else:    
+                if (stack[-1] == my_dict[i]):
+                    stack.pop()
+                else:
+                    return False
+            else:
                 stack.append(i)
         
-    
-        
-        return len(stack) == 0
-        
+        if  len(stack) == 0:
+            return True
+        else:
+            return False
+
         
         
         
