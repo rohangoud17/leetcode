@@ -1,36 +1,26 @@
-class Solution(object):
-    def isValid(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-
-        if (len(s) < 2):
-            return False
+class Solution:
+    def isValid(self, s: str) -> bool:
         
-        if (len(s) % 2 != 0):
-            return False
-        
-        my_dict = {')': '(', '}':'{',']':'['}
+        mapping = {'}':'{',']':'[',')':'('}
 
         stack = []
 
+        if (len(s) %2 != 0 or len(s) < 2):
+            return False
+        
         for i in s:
-            if i in my_dict:
+            if i in mapping:
                 if not stack:
                     return False
-                if (stack[-1] == my_dict[i]):
+                if (mapping[i] == stack[-1]):
                     stack.pop()
                 else:
                     return False
             else:
                 stack.append(i)
-        
-        if  len(stack) == 0:
-            return True
-        else:
-            return False
+
+        return not stack
 
         
-        
+
         
