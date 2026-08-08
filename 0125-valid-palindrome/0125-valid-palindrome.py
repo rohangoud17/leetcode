@@ -1,26 +1,17 @@
 import re
-class Solution(object):
-    def isPalindrome(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        
         res_string = ""
+
         for i in s:
-            if i.isalpha():
-                res_string += i.lower()
-            if i.isdigit():
-                res_string += i
+            if (i.isalnum()):
+                res_string += (i.lower())
         
-        
-        res_rev = res_string[::-1]
+        rev_res = res_string[::-1]
 
-        return res_rev == res_string
-        
-
-
+        return res_string == rev_res
 
         
-        
+
         
