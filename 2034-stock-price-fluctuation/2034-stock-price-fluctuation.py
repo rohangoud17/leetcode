@@ -1,51 +1,50 @@
-class StockPrice:
+class StockPrice(object):
 
     def __init__(self):
 
-        self.records = {} # timeStamp -> price
-        self.timestamps = []
-        self.minHeap = [] #(price, timeStamp)
-        self.maxHeap = []
+        self.records = {}
+        self.minPriceHeap = [] #(price, timestamp)
+        self.maxPriceHeap = []
+        self.timeStampsHeap = []
+        
+    def update(self, timestamp, price):
+        """
+        :type timestamp: int
+        :type price: int
+        :rtype: None
+        """
+        
+        heapq.heappush(self.timeStampsHeap, -1* timestamp)
+        self.records[timestamp] = price
+        heapq.heappush(self.minPriceHeap, (price,timestamp))
+        heapq.heappush(self.maxPriceHeap, (-1*price, timestamp))
 
 
+    def current(self):
+        """
+        :rtype: int
+        """
+        if -1* self.timeStampsHeap[0] in self.records:
+            return  self.records[-1*self.timeStampsHeap[0]]
         
 
-    def update(self, timestamp: int, price: int) -> None:
-        if timestamp not in self.records:
-            self.records[timestamp] = price
-        else:
-            self.records[timestamp] = price
-        heapq.heappush(self.timestamps, -1*timestamp)
-
-        heapq.heappush(self.minHeap, (price, timestamp))
-        heapq.heappush(self.maxHeap, (-1*price, timestamp))
+    def maximum(self):
+        """
+        :rtype: int
+        """
+        while (self.maxPriceHeap and -1*self.maxPriceHeap[0][0] != self.records[self.maxPriceHeap[0][1]]):
+            heapq.heappop(self.maxPriceHeap)
         
-    def current(self) -> int:
+        return -1*self.maxPriceHeap[0][0]
 
-        return self.records[-1*self.timestamps[0]]
+    def minimum(self):
+        """
+        :rtype: int
+        """
+        while (self.minPriceHeap[0][0] != self.records[self.minPriceHeap[0][1]]):
+            heapq.heappop(self.minPriceHeap)
         
-
-    def maximum(self) -> int:
-
-        while True:
-            price, timestamp = self.maxHeap[0]
-            if (self.records[timestamp] == -1*price):
-                return -1*price
-            heapq.heappop(self.maxHeap)
-
-
-        return -1*self.maxHeap[0]
-        
-
-    def minimum(self) -> int:
-
-        while True:
-            price, timestamp = self.minHeap[0]
-            if (self.records[timestamp] ==price):
-                return price
-            heapq.heappop(self.minHeap)
-        return self.minHeap[0]
-
+        return self.minPriceHeap[0][0]
         
 
 
@@ -55,3 +54,6 @@ class StockPrice:
 # param_2 = obj.current()
 # param_3 = obj.maximum()
 # param_4 = obj.minimum()
+
+
+
