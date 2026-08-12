@@ -2,10 +2,11 @@ class StockPrice(object):
 
     def __init__(self):
 
-        self.records = {}
-        self.minPriceHeap = [] #(price, timestamp)
-        self.maxPriceHeap = []
-        self.timeStampsHeap = []
+        self.records = {} #records = timestamp -> price
+        self.timestamps = []
+        self.minHeap = [] #(price, timestamp)
+        self.maxHeap = [] #(price, timestamp)
+        
         
     def update(self, timestamp, price):
         """
@@ -13,38 +14,41 @@ class StockPrice(object):
         :type price: int
         :rtype: None
         """
-        
-        heapq.heappush(self.timeStampsHeap, -1* timestamp)
-        self.records[timestamp] = price
-        heapq.heappush(self.minPriceHeap, (price,timestamp))
-        heapq.heappush(self.maxPriceHeap, (-1*price, timestamp))
 
+        self.records[timestamp] = price
+        heapq.heappush(self.timestamps,-1* timestamp)
+        heapq.heappush(self.minHeap, (price,timestamp))
+        heapq.heappush(self.maxHeap, (-1*price, timestamp))
+                
 
     def current(self):
         """
         :rtype: int
         """
-        if -1* self.timeStampsHeap[0] in self.records:
-            return  self.records[-1*self.timeStampsHeap[0]]
+        return self.records[-1*self.timestamps[0]]
         
 
     def maximum(self):
         """
         :rtype: int
         """
-        while (self.maxPriceHeap and -1*self.maxPriceHeap[0][0] != self.records[self.maxPriceHeap[0][1]]):
-            heapq.heappop(self.maxPriceHeap)
+
+        while(self.maxHeap and -1* self.maxHeap[0][0] != self.records[self.maxHeap[0][1]]):
+            heapq.heappop(self.maxHeap)
         
-        return -1*self.maxPriceHeap[0][0]
+        return -1*self.maxHeap[0][0]
+        
 
     def minimum(self):
         """
         :rtype: int
         """
-        while (self.minPriceHeap[0][0] != self.records[self.minPriceHeap[0][1]]):
-            heapq.heappop(self.minPriceHeap)
+
+        while(self.minHeap and self.minHeap[0][0] != self.records[self.minHeap[0][1]]):
+            heapq.heappop(self.minHeap)
+
+        return self.minHeap[0][0]
         
-        return self.minPriceHeap[0][0]
         
 
 
